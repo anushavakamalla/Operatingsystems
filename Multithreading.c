@@ -1,62 +1,57 @@
 ///*
 //  Anusha Vakamalla
 //*/
-//
-//
-//
-//#include <pthread.h>
-//#include <semaphore.h>
-//#include <unistd.h>
-//#include <string.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <errno.h>
-//#include <assert.h>
-//
-///*** Constants that define parameters of the simulation ***/
-//
-//#define MAX_SEATS 3        /* Number of seats in the professor's office */
-//#define professor_LIMIT 10 /* Number of students the professor can help before he needs a break */
-//#define MAX_STUDENTS 1000  /* Maximum number of students in the simulation */
-//
-//#define CLASSA 0
-//#define CLASSB 1
-//#define CLASSC 2
-//#define CLASSD 3
-//#define CLASSE 4
-//pthread_mutex_t fora=PTHREAD_MUTEX_INITIALIZER;
-//pthread_mutex_t forb=PTHREAD_MUTEX_INITIALIZER;
-//pthread_mutex_t forp=PTHREAD_MUTEX_INITIALIZER;
-///* TODO */
-///* Add your synchronization variables here */
-//
-///* Basic information about simulation.  They are printed/checked at the end 
-// * and in assert statements during execution.
-// *
-// * You are responsible for maintaining the integrity of these variables in the 
-// * code that you develop. 
-// */
-//
-//static int students_in_office;   /* Total numbers of students currently in the office */
-//static int classa_inoffice ;      /* Total numbers of students from class A currently in the office */
-//static int classb_inoffice;      /* Total numbers of students from class B in the office */
-//static int students_since_break = 0;
-//static int forclassa=0;
-//static int forclassb=0;
-//static int continousa=0;           
-//static int continousb=0;
-//
-//typedef struct 
-//{
-//  int arrival_time;  // time between the arrival of this student and the previous student
-//  int question_time; // time the student needs to spend with the professor
-//  int student_id;
-//  int class;
-//} student_info;
-//
-///* Called at beginning of simulation.  
-// * TODO: Create/initialize all synchronization
-// * variables and other global variables that you add.
+
+#include <pthread.h>
+#include <semaphore.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <assert.h>
+/*** Constants that define parameters of the simulation ***/
+
+#define MAX_SEATS 3        /* Number of seats in the professor's office */
+#define professor_LIMIT 10 /* Number of students the professor can help before he needs a break */
+#define MAX_STUDENTS 1000  /* Maximum number of students in the simulation */
+
+#define CLASSA 0
+#define CLASSB 1
+#define CLASSC 2
+#define CLASSD 3
+#define CLASSE 4
+pthread_mutex_t fora=PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t forb=PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t forp=PTHREAD_MUTEX_INITIALIZER;
+/* TODO */
+/* Add your synchronization variables here */
+/* Basic information about simulation.  They are printed/checked at the end 
+/* and in assert statements during execution.
+/ * You are responsible for maintaining the integrity of these variables in the 
+/ * code that you develop. 
+/ */
+
+static int students_in_office;   /* Total numbers of students currently in the office */
+static int classa_inoffice ;      /* Total numbers of students from class A currently in the office */
+static int classb_inoffice;      /* Total numbers of students from class B in the office */
+static int students_since_break = 0;
+static int forclassa=0;
+static int forclassb=0;
+static int continousa=0;           
+static int continousb=0;
+
+typedef struct 
+{
+ int arrival_time;  // time between the arrival of this student and the previous student
+ int question_time; // time the student needs to spend with the professor
+ int student_id;
+ int class;
+} student_info;
+
+/* Called at beginning of simulation.  
+* TODO: Create/initialize all synchronization
+* variables and other global variables that you add.
  */
 static int initialize(student_info *si, char *filename) 
 {
